@@ -72,10 +72,10 @@
           <div class="grid grid-cols-3 gap-6" id="room-types"></div>
         </div>
 
-        <!-- New Room Number Selection -->
+        <!-- Room Number Selection -->
         <div id="room-number-selection" class="hidden mt-8">
           <p class="font-medium mb-4">Choose Room Number in <span id="selected-block-final" class="font-bold text-blue-600"></span></p>
-          <p class="text-sm text-gray-600 mb-4">Vacant Rooms: <span id="vacant-count" class="font-bold text-green-600"></span>/900</p>
+          <p class="text-sm text-gray-600 mb-4">Vacant Rooms: <span id="vacant-count" class="font-bold text-green-600"></span></p>
           <div class="grid grid-cols-10 gap-2 max-h-80 overflow-y-auto p-4 border rounded-2xl bg-gray-50" id="room-grid"></div>
         </div>
       </div>
@@ -111,9 +111,9 @@
     const blocks = { 'A': 'Ladies', 'B': 'Ladies', 'C': 'Gents', 'D': 'Gents', 'E': 'Gents' };
 
     const roomTypes = [
-      { name: "2-Person Room", capacity: 2, price: 20000 },
-      { name: "3-Person Room", capacity: 3, price: 16000 },
-      { name: "4-Person Room", capacity: 4, price: 10000 }
+      { name: "2-Person Room", capacity: 2, price: 20000, start: 1, end: 200 },
+      { name: "3-Person Room", capacity: 3, price: 16000, start: 201, end: 500 },
+      { name: "4-Person Room", capacity: 4, price: 10000, start: 501, end: 900 }
     ];
 
     function showPage(page) {
@@ -146,37 +146,44 @@
 
       const container = document.getElementById('room-types');
       container.innerHTML = roomTypes.map(rt => `
-        <div onclick="selectRoomType('${rt.name}', ${rt.price})" class="border-2 hover:border-green-500 cursor-pointer p-8 rounded-3xl text-center">
+        <div onclick="selectRoomType('${rt.name}', ${rt.price}, ${rt.start}, ${rt.end})" class="border-2 hover:border-green-500 cursor-pointer p-8 rounded-3xl text-center">
           <h3 class="text-2xl font-bold">${rt.name}</h3>
           <p class="text-green-600 text-4xl font-bold mt-6">KSh ${rt.price.toLocaleString()}</p>
-          <p class="text-sm text-gray-500 mt-2">Max ${rt.capacity} people</p>
+          <p class="text-sm text-gray-500 mt-2">Rooms ${rt.start} - ${rt.end}</p>
         </div>
       `).join('');
     }
 
-    function selectRoomType(type, price) {
+    function selectRoomType(type, price, start, end) {
       bookingData.roomType = type;
       bookingData.amount = price;
+      bookingData.roomStart = start;
+      bookingData.roomEnd = end;
       document.getElementById('room-number-selection').classList.remove('hidden');
       document.getElementById('selected-block-final').textContent = `Block ${bookingData.block}`;
-      renderRoomGrid();
+      renderRoomGrid(start, end);
     }
 
-    function renderRoomGrid() {
+    function renderRoomGrid(start, end) {
       const container = document.getElementById('room-grid');
       container.innerHTML = '';
       const block = bookingData.block;
-      const vacant = 900 - bookedRooms[block].size;
-      document.getElementById('vacant-count').textContent = vacant;
+      let vacant = 0;
 
-      for (let i = 1; i <= 900; i++) {
+      for (let i = start; i <= end; i++) {
         const isBooked = bookedRooms[block].has(i);
+        if (!isBooked) vacant++;
+
         const btn = document.createElement('button');
         btn.className = `room-btn w-10 h-10 text-xs border rounded-lg ${isBooked ? 'room-booked' : 'bg-white hover:bg-blue-100'}`;
         btn.textContent = i;
-        if (!isBooked) btn.onclick = () => { bookingData.roomNumber = i; alert(`Selected Room ${i}`); };
+        if (!isBooked) btn.onclick = () => { 
+          bookingData.roomNumber = i; 
+          alert(`Selected: Room ${i}`); 
+        };
         container.appendChild(btn);
       }
+      document.getElementById('vacant-count').textContent = vacant;
     }
 
     function setStep(step) {
