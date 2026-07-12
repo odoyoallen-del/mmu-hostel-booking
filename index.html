@@ -72,6 +72,7 @@
           <div class="grid grid-cols-3 gap-6" id="room-types"></div>
         </div>
 
+        <!-- Room Number Selection -->
         <div id="room-number-selection" class="hidden mt-8">
           <p class="font-medium mb-4">Choose Room Number in <span id="selected-block-final" class="font-bold text-blue-600"></span></p>
           <p class="text-sm text-gray-600 mb-4">Vacant Rooms: <span id="vacant-count" class="font-bold text-green-600"></span></p>
@@ -82,17 +83,13 @@
       <!-- Step 3 -->
       <div id="step-content-3" class="hidden">
         <h3 class="text-2xl font-semibold mb-6">Payment Information</h3>
-        <div class="bg-green-50 border border-green-300 p-8 rounded-2xl mb-8 text-center">
-          <p class="font-bold text-lg mb-2">M-Pesa Prompt Payment</p>
-          <p class="text-4xl font-bold text-green-700">0783367057</p>
-          <p class="text-xl mt-2">Judy Wandii</p>
-          <button onclick="simulateMpesaPrompt()" 
-                  class="mt-6 bg-green-600 hover:bg-green-700 text-white px-10 py-4 rounded-2xl text-lg font-semibold">
-            Pay with M-Pesa Prompt
-          </button>
+        <div class="bg-green-50 border border-green-300 p-8 rounded-2xl mb-8">
+          <p class="font-bold text-lg">Send Money via M-Pesa to:</p>
+          <p class="text-4xl font-bold text-green-700 mt-3">0783367057</p>
+          <p class="text-xl font-medium mt-2">Judy Wandii</p>
         </div>
-
-        <input type="text" id="trans-code" placeholder="Enter M-Pesa Transaction Code" class="w-full p-4 border rounded-2xl mb-6">
+        <input type="text" id="trans-code" placeholder="M-Pesa Transaction Code" class="w-full p-4 border rounded-2xl mb-6">
+        <input type="file" id="payment-proof" accept="image/*" class="w-full p-4 border rounded-2xl mb-6">
         <button onclick="submitBooking()" class="w-full bg-green-600 hover:bg-green-700 text-white py-6 rounded-2xl text-xl font-bold">Submit Booking</button>
       </div>
     </div>
@@ -152,7 +149,7 @@
         <div onclick="selectRoomType('${rt.name}', ${rt.price}, ${rt.start}, ${rt.end})" class="border-2 hover:border-green-500 cursor-pointer p-8 rounded-3xl text-center">
           <h3 class="text-2xl font-bold">${rt.name}</h3>
           <p class="text-green-600 text-4xl font-bold mt-6">KSh ${rt.price.toLocaleString()}</p>
-          <p class="text-sm text-gray-500 mt-2">Rooms \( {rt.start}- \){rt.end}</p>
+          <p class="text-sm text-gray-500 mt-2">Rooms ${rt.start} - ${rt.end}</p>
         </div>
       `).join('');
     }
@@ -182,15 +179,11 @@
         btn.textContent = i;
         if (!isBooked) btn.onclick = () => { 
           bookingData.roomNumber = i; 
-          alert(`✅ Selected Room ${i}`); 
+          alert(`Selected: Room ${i}`); 
         };
         container.appendChild(btn);
       }
       document.getElementById('vacant-count').textContent = vacant;
-    }
-
-    function simulateMpesaPrompt() {
-      alert("M-Pesa Prompt Initiated!\n\nSend KSh " + bookingData.amount + " to 0783367057 (Judy Wandii)\n\nAfter payment, enter the transaction code below.");
     }
 
     function setStep(step) {
@@ -232,7 +225,6 @@
     window.nextStep = nextStep;
     window.selectBlock = selectBlock;
     window.selectRoomType = selectRoomType;
-    window.simulateMpesaPrompt = simulateMpesaPrompt;
     window.submitBooking = submitBooking;
   </script>
 </body>
