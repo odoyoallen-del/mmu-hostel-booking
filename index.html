@@ -5,230 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MMU Hostel Booking System</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body { font-family: 'Inter', system-ui, sans-serif; }
+    body { font-family: system-ui, sans-serif; }
     .step-active { background-color: #1e40af; color: white; }
-    .room-btn { transition: all 0.2s; }
-    .room-btn:hover { transform: scale(1.05); }
-    .room-booked { background-color: #f3f4f6; cursor: not-allowed; }
   </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 p-4">
 
-  <nav class="bg-blue-900 text-white py-4">
-    <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-blue-900 font-bold text-xl">MMU</div>
-        <div><h1 class="font-bold text-xl">Hostel Booking System</h1></div>
-      </div>
-      <div class="flex gap-6">
-        <a href="#" onclick="showPage('home')" class="hover:underline">Home</a>
-        <a href="#" onclick="showPage('booking')" class="hover:underline">Book Now</a>
-        <a href="#" onclick="showPage('admin')" class="hover:underline">Admin</a>
-      </div>
+  <nav class="bg-blue-900 text-white p-4 rounded-xl mb-6">
+    <div class="flex items-center gap-3">
+      <img src="https://i.ibb.co/0jXzK7K/mmu-logo.png" alt="MMU" class="h-12">
+      <h1 class="text-2xl font-bold">MMU Hostel Booking</h1>
     </div>
   </nav>
 
-  <!-- HOME -->
-  <div id="home" class="page max-w-4xl mx-auto text-center py-24">
-    <h1 class="text-6xl font-bold text-blue-900 mb-6">Welcome to MMU Hostels</h1>
-    <button onclick="showPage('booking')" class="bg-orange-500 hover:bg-orange-600 text-white text-3xl font-bold px-20 py-8 rounded-3xl shadow-xl">Book Hostel Now →</button>
-  </div>
-
-  <!-- BOOKING -->
-  <div id="booking" class="page hidden max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl my-10">
+  <div id="booking" class="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
     <div class="bg-blue-900 text-white p-8 text-center">
-      <h2 class="text-3xl font-bold">Hostel Room Booking</h2>
+      <h2 class="text-3xl font-bold">Hostel Booking</h2>
     </div>
 
-    <div class="flex bg-gray-100">
-      <div onclick="setStep(1)" id="step1" class="step flex-1 py-4 text-center font-medium cursor-pointer step-active">1. Details</div>
-      <div onclick="setStep(2)" id="step2" class="step flex-1 py-4 text-center font-medium cursor-pointer">2. Block & Room</div>
-      <div onclick="setStep(3)" id="step3" class="step flex-1 py-4 text-center font-medium cursor-pointer">3. Payment</div>
-    </div>
-
-    <div class="p-10">
-      <!-- Step 1: Details -->
-      <div id="step-content-1">
-        <h3 class="text-2xl font-semibold mb-8">Student Details</h3>
-        <div class="grid grid-cols-2 gap-6" id="student-form"></div>
-        <button onclick="nextStep()" class="mt-10 w-full bg-blue-600 text-white py-5 rounded-2xl text-xl">Continue to Room Selection →</button>
+    <div class="p-8">
+      <div class="bg-green-50 border border-green-300 p-8 rounded-2xl">
+        <p class="font-bold text-lg">Send Money via M-Pesa to:</p>
+        <p class="text-5xl font-bold text-green-700 mt-4">0783367057</p>
+        <p class="text-xl mt-2">Judy Wandii</p>
       </div>
 
-      <!-- Step 2: Block & Room Selection -->
-      <div id="step-content-2" class="hidden">
-        <h3 class="text-2xl font-semibold mb-6">Select Block & Room</h3>
-        
-        <div class="mb-8">
-          <p class="font-medium mb-3">Gender-Based Blocks:</p>
-          <div class="grid grid-cols-5 gap-3" id="block-options"></div>
-        </div>
-
-        <div id="room-selection" class="hidden">
-          <p class="font-medium mb-3">Available Rooms in <span id="selected-block-display" class="font-bold"></span></p>
-          <p class="text-sm text-gray-600 mb-4">Vacant Rooms: <span id="vacant-count" class="font-bold text-green-600"></span>/900</p>
-          
-          <div class="grid grid-cols-10 gap-2 max-h-96 overflow-y-auto p-4 border rounded-2xl bg-gray-50" id="room-grid"></div>
-        </div>
-      </div>
-
-      <!-- Step 3: Payment -->
-      <div id="step-content-3" class="hidden">
-        <h3 class="text-2xl font-semibold mb-6">Payment Information</h3>
-        <div class="bg-green-50 border border-green-300 p-8 rounded-2xl mb-8">
-          <p class="font-bold text-lg">Send Money via M-Pesa to:</p>
-          <p class="text-4xl font-bold text-green-700 mt-3">078336705</p>
-          <p class="text-xl font-medium mt-2">Judy Wandii</p>
-        </div>
-
-        <input type="text" id="trans-code" placeholder="M-Pesa Transaction Code" class="w-full p-4 border rounded-2xl mb-4">
-        <input type="file" id="payment-proof" accept="image/*" class="w-full p-4 border rounded-2xl mb-6">
-        
-        <button onclick="submitBooking()" class="w-full bg-green-600 hover:bg-green-700 text-white py-6 rounded-2xl text-xl font-bold">
-          Submit Booking
-        </button>
-      </div>
+      <button onclick="alert('Test successful! Number is now 0783367057')" 
+              class="mt-8 w-full bg-green-600 text-white py-6 rounded-2xl text-xl font-bold">
+        Click here to test
+      </button>
     </div>
   </div>
 
-  <!-- CONFIRMATION -->
-  <div id="confirmation" class="page hidden max-w-lg mx-auto my-20 bg-white rounded-3xl shadow-2xl p-12 text-center">
-    <i class="fas fa-check-circle text-green-500 text-8xl mb-6"></i>
-    <h2 class="text-4xl font-bold text-green-700 mb-4">Booking Received!</h2>
-    <p id="ref-number" class="text-3xl font-mono bg-gray-100 p-4 rounded-2xl inline-block"></p>
-    <button onclick="location.reload()" class="mt-8 bg-blue-600 text-white px-10 py-4 rounded-2xl">Book Another Room</button>
-  </div>
-
-  <script>
-    let currentStep = 1;
-    let bookingData = {};
-    let allBookings = [];
-    let selectedBlock = null;
-    let bookedRooms = {}; // Simulate booked rooms per block
-
-    const blocks = {
-      'A': { gender: 'Ladies', color: 'pink' },
-      'B': { gender: 'Ladies', color: 'pink' },
-      'C': { gender: 'Gents', color: 'blue' },
-      'D': { gender: 'Gents', color: 'blue' },
-      'E': { gender: 'Gents', color: 'blue' }
-    };
-
-    // Initialize some booked rooms
-    Object.keys(blocks).forEach(block => {
-      bookedRooms[block] = new Set([Math.floor(Math.random()*200)+1, Math.floor(Math.random()*300)+300]);
-    });
-
-    function showPage(page) {
-      document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-      document.getElementById(page).classList.remove('hidden');
-    }
-
-    const fields = ["Full Name", "Admission Number", "National ID", "Email Address", "Phone Number", "Age", "Date of Birth", "Gender", "Course", "Year of Study", "Emergency Contact Name", "Emergency Contact Phone"];
-
-    function createForm() {
-      const container = document.getElementById('student-form');
-      container.innerHTML = '';
-      fields.forEach(field => {
-        const div = document.createElement('div');
-        div.innerHTML = `<label class="block text-sm font-medium mb-2">${field}</label>
-          <input type="text" class="w-full p-4 border rounded-2xl" id="${field.toLowerCase().replace(/\s+/g, '')}">`;
-        container.appendChild(div);
-      });
-    }
-
-    function showBlocks() {
-      const container = document.getElementById('block-options');
-      container.innerHTML = Object.keys(blocks).map(block => `
-        <div onclick="selectBlock('${block}')" class="cursor-pointer border-2 hover:border-blue-500 p-6 rounded-2xl text-center">
-          <div class="text-4xl font-bold">Block ${block}</div>
-          <div class="text-sm text-gray-600">${blocks[block].gender}</div>
-          <div class="text-xs mt-2 text-green-600">${900 - bookedRooms[block].size} Vacant</div>
-        </div>
-      `).join('');
-    }
-
-    function selectBlock(block) {
-      selectedBlock = block;
-      document.getElementById('selected-block-display').textContent = `Block \( {block} ( \){blocks[block].gender})`;
-      document.getElementById('room-selection').classList.remove('hidden');
-      renderRoomGrid(block);
-    }
-
-    function renderRoomGrid(block) {
-      const container = document.getElementById('room-grid');
-      container.innerHTML = '';
-      const vacantCount = 900 - bookedRooms[block].size;
-      document.getElementById('vacant-count').textContent = vacantCount;
-
-      for (let i = 1; i <= 900; i++) {
-        const isBooked = bookedRooms[block].has(i);
-        const btn = document.createElement('button');
-        btn.className = `room-btn w-10 h-10 text-xs rounded-lg border ${isBooked ? 'room-booked text-gray-400' : 'bg-white hover:bg-blue-100 border-blue-200'}`;
-        btn.textContent = i;
-        if (!isBooked) {
-          btn.onclick = () => selectRoom(block, i);
-        }
-        container.appendChild(btn);
-      }
-    }
-
-    function selectRoom(block, roomNumber) {
-      bookingData.block = block;
-      bookingData.roomNumber = roomNumber;
-      bookingData.roomType = `Block ${block} - Room ${roomNumber}`;
-      alert(`Selected: Block ${block}, Room ${roomNumber} (Max 4 people)`);
-      setStep(3);
-    }
-
-    function setStep(step) {
-      currentStep = step;
-      document.querySelectorAll('.step').forEach((el, i) => el.classList.toggle('step-active', i+1 === step));
-      document.querySelectorAll('#step-content-1, #step-content-2, #step-content-3').forEach(el => el.classList.add('hidden'));
-      document.getElementById(`step-content-${step}`).classList.remove('hidden');
-
-      if (step === 2) showBlocks();
-    }
-
-    function nextStep() {
-      fields.forEach(field => {
-        const id = field.toLowerCase().replace(/\s+/g, '');
-        bookingData[id] = document.getElementById(id).value;
-      });
-      setStep(2);
-    }
-
-    function submitBooking() {
-      const transCode = document.getElementById('trans-code').value;
-      if (!transCode) return alert("Please enter M-Pesa transaction code");
-
-      bookingData.transactionCode = transCode;
-      bookingData.status = "Pending";
-      bookingData.reference = "MMU" + Math.floor(100000 + Math.random() * 900000);
-
-      // Simulate booking the room
-      if (bookingData.block) bookedRooms[bookingData.block].add(bookingData.roomNumber);
-
-      allBookings.unshift(bookingData);
-      document.getElementById('ref-number').innerHTML = `
-        ${bookingData.reference}<br>
-        <span class="text-lg">Block ${bookingData.block} - Room ${bookingData.roomNumber}</span>
-      `;
-      showPage('confirmation');
-    }
-
-    window.onload = () => {
-      createForm();
-      showPage('home');
-    };
-
-    window.showPage = showPage;
-    window.setStep = setStep;
-    window.nextStep = nextStep;
-    window.selectBlock = selectBlock;
-    window.selectRoom = selectRoom;
-    window.submitBooking = submitBooking;
-  </script>
 </body>
 </html>
