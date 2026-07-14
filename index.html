@@ -9,17 +9,11 @@
   <style>
     body { font-family: 'Inter', system-ui, sans-serif; }
     .step-active { background-color: #1e40af; color: white; }
-    .room-btn { transition: all 0.2s; }
-    .room-btn:hover { transform: scale(1.05); background-color: #dbeafe; }
-    .room-booked { background-color: #f3f4f6; cursor: not-allowed; color: #9ca3af; }
     
-    /* Mobile fixes */
+    /* Mobile fix for Block text */
     @media (max-width: 640px) {
-      .room-card {
-        padding: 16px 8px;
-      }
-      .room-card h3 {
-        font-size: 1.1rem;
+      .block-text {
+        font-size: 1.35rem !important;
       }
     }
   </style>
@@ -29,7 +23,7 @@
   <nav class="bg-blue-900 text-white py-4">
     <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
       <div class="flex items-center gap-3">
-        <img src="https://i.ibb.co/0jXzK7K/mmu-logo.png" alt="MMU Logo" class="h-14 w-auto">
+        <img src="https://i.ibb.co/0jXzK7K/mmu-logo.png" alt="MMU Logo" class="h-12 w-auto">
         <div>
           <h1 class="font-bold text-xl">Hostel Booking System</h1>
           <p class="text-xs opacity-75">Multimedia University of Kenya</p>
@@ -146,7 +140,7 @@
     function showBlocks() {
       document.getElementById('block-options').innerHTML = Object.keys(blocks).map(b => `
         <div onclick="selectBlock('${b}')" class="cursor-pointer border-2 hover:border-blue-500 p-6 rounded-2xl text-center">
-          <div class="text-4xl font-bold">Block ${b}</div>
+          <div class="block-text text-3xl font-bold">Block ${b}</div>
           <div class="text-sm text-gray-600">${blocks[b]}</div>
         </div>
       `).join('');
@@ -159,9 +153,9 @@
 
       const container = document.getElementById('room-types');
       container.innerHTML = roomTypes.map(rt => `
-        <div onclick="selectRoomType('${rt.name}', ${rt.price}, ${rt.start}, ${rt.end})" class="border-2 hover:border-green-500 cursor-pointer p-6 rounded-3xl text-center room-card">
-          <h3 class="text-xl font-bold">${rt.name}</h3>
-          <p class="text-green-600 text-3xl font-bold mt-4">KSh ${rt.price.toLocaleString()}</p>
+        <div onclick="selectRoomType('${rt.name}', ${rt.price}, ${rt.start}, ${rt.end})" class="border-2 hover:border-green-500 cursor-pointer p-8 rounded-3xl text-center">
+          <h3 class="text-2xl font-bold">${rt.name}</h3>
+          <p class="text-green-600 text-4xl font-bold mt-6">KSh ${rt.price.toLocaleString()}</p>
           <p class="text-sm text-gray-500 mt-2">Rooms ${rt.start} - ${rt.end}</p>
         </div>
       `).join('');
@@ -201,7 +195,7 @@
 
     function simulateMpesaPrompt() {
       if (!bookingData.amount) return alert("Please select a room first");
-      alert("M-Pesa Prompt Initiated!\n\nSend KSh " + bookingData.amount.toLocaleString() + " to 0783367057 (Judy Wandii)\n\nAfter sending, enter the transaction code below.");
+      alert("M-Pesa Prompt Initiated!\n\nSend KSh " + bookingData.amount.toLocaleString() + " to 0783367057 (Judy Wandii)");
     }
 
     function setStep(step) {
